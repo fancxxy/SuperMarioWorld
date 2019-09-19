@@ -61,7 +61,7 @@ func parse(smw *generator.SMW) arguments {
 	flag.CommandLine.Init(os.Args[0], flag.ExitOnError)
 	generated := flag.CommandLine.Bool("g", false, "generate ascii data")
 	background := flag.CommandLine.String("b", "248,206,1", "background color")
-	fps := flag.CommandLine.Int("f", 30, "frames per second")
+	fps := flag.CommandLine.Int("f", 5, "frames per second")
 	point := flag.CommandLine.String("p", "0,0", "top left point in terminal")
 	flag.CommandLine.Parse(os.Args[1:])
 	arts := flag.Args()
@@ -107,6 +107,10 @@ func parse(smw *generator.SMW) arguments {
 		os.Exit(1)
 	}
 
+	if *fps <= 0 {
+		*fps = 5
+	}
+
 	return arguments{Arts: arts, Itv: 1000 / (*fps), Point: image.Point{X: x, Y: y}}
 }
 
@@ -137,6 +141,7 @@ func draw(smw *generator.SMW, args arguments) {
 	callback()
 	buf := bufio.NewWriter(os.Stdout)
 	buf.WriteString(initialize())
+	buf.WriteString(title())
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

@@ -40,3 +40,7 @@ func cleanup() string {
 func linefeed() string {
 	return "\033[m\n"
 }
+
+func title() string {
+	return "\033];Super Mario World in terminal\007"
+}
