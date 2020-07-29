@@ -20,8 +20,8 @@ func reset() string {
 	return "\033[H"
 }
 
-func color(rgb string) string {
-	return fmt.Sprintf("\033[48;2;%sm%s", rgb, "  ")
+func escape(rgb, str string) string {
+	return fmt.Sprintf("\033[48;2;%sm%s", rgb, str)
 }
 
 /*
@@ -29,7 +29,7 @@ func color(rgb string) string {
 	\033[?25h 显示光标
 	\033]50;SetProfile=smw\a 加载iterm2的配置
 */
-func initialize() string {
+func prepare() string {
 	return "\033[H\033[2J\033[?25l\033[0m"
 }
 
