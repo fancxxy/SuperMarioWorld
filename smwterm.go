@@ -51,6 +51,7 @@ func parse() arguments {
 
 	fs := make([][]charact, len(frames))
 	for i, frame := range frames {
+		frame = strings.Trim(frame, "\"")
 		characts := strings.Split(frame, "/")
 		fs[i] = make([]charact, len(characts))
 		for j, charact := range characts {

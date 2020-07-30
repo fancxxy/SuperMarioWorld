@@ -3,7 +3,7 @@
 ### Introduction
 smwterm is a command line program to draw characters of Super Mario World in terminal.
 
-[![asciicast](https://asciinema.org/a/g5hg1IAdgwf3T0iUrHNkKnOlL.svg)](https://asciinema.org/a/g5hg1IAdgwf3T0iUrHNkKnOlL)
+[![asciicast](https://asciinema.org/a/py2VhMEzLFMH2mxIYCgFbMYcY.svg)](https://asciinema.org/a/py2VhMEzLFMH2mxIYCgFbMYcY)
 
 ### Usage
 ```

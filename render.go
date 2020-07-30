@@ -34,14 +34,32 @@ func (r *renderer) frame(background [][]byte, charact []string, point image.Poin
 		bgRect.Max.Y-point.Y,
 	)
 
-	for i := 0; i < bgRect.Dy(); i++ {
-		for j := 0; j < bgRect.Dx(); j++ {
-			// 是背景色就跳过
-			if charact[fgRect.Min.Y+i][fgRect.Min.X+j] != char {
-				background[bgRect.Min.Y+i][bgRect.Min.X+j] = charact[fgRect.Min.Y+i][fgRect.Min.X+j]
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		for i := 0; i < bgRect.Dy()/2; i++ {
+			for j := 0; j < bgRect.Dx(); j++ {
+				// 是背景色就跳过
+				if charact[fgRect.Min.Y+i][fgRect.Min.X+j] != char {
+					background[bgRect.Min.Y+i][bgRect.Min.X+j] = charact[fgRect.Min.Y+i][fgRect.Min.X+j]
+				}
 			}
 		}
-	}
+	}()
+
+	go func() {
+		defer wg.Done()
+		for i := bgRect.Dy() / 2; i < bgRect.Dy(); i++ {
+			for j := 0; j < bgRect.Dx(); j++ {
+				if charact[fgRect.Min.Y+i][fgRect.Min.X+j] != char {
+					background[bgRect.Min.Y+i][bgRect.Min.X+j] = charact[fgRect.Min.Y+i][fgRect.Min.X+j]
+				}
+			}
+		}
+	}()
+
+	wg.Wait()
 
 	// src := charact[fgRect.Min.Y+i][fgRect.Min.X:]
 	// dst := background[bgRect.Min.Y+i][bgRect.Min.X:]
